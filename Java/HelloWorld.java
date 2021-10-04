@@ -18,12 +18,14 @@ class HelloWorld {
         return rand;
     }
 
-    public static int generateRandomInt() {
-        return 4;
+    public static double generateRandomInt() {
+        double rand = (int) (Math.random() * 10) + 1;
+        return rand;
     }
 
     public static void main(String[] args) {
         System.out.println("Hello, World!");
         System.out.println("Random Number: " + generateRandom());
+        System.out.println("Random Number: " + generateRandomInt());
     }
 }
