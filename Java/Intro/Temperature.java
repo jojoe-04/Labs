@@ -42,7 +42,7 @@ public class Temperature {
     }
 
     public static void main(String[] args) {
-        System.out.println("Program Generates a random integer & checks if it's even or odd: ");
+        System.out.println("Program Generates a random integer & checks if it's temperature range: ");
         System.out.println(" ");
         System.out.println(checkTemperature(generateRandom()));
     }
