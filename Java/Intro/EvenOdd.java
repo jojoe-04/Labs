@@ -8,7 +8,7 @@ public class EvenOdd {
      * @return int
      */
     public static int generateRandom() {
-        int rand = (int) (Math.random() * 10) + 1; // convert number to random int
+        int rand = (int) (Math.random() * 100) + 1; // convert number to random int
         return rand;
     }
 
