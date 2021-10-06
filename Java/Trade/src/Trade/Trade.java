@@ -1,18 +1,23 @@
 package Trade;
 
-public class Trade {
+import java.time.*;
+
+public abstract class Trade {
 
     private String ID;
     private Symbol symbol;
     // private enum Symbol {AAPL,IBM};
     private int quantity;
     private double price;
+    private LocalDate date = LocalDate.now();
+    private LocalDateTime tradeTime;
 
-    public Trade(String ID, Symbol symbol, int quantity, double price) {
+    public Trade(String ID, Symbol symbol, int quantity, double price, LocalDateTime tradeTime) {
         this.ID = ID;
         this.symbol = symbol;
         this.quantity = quantity;
         this.price = price;
+        this.tradeTime = tradeTime;
     }
 
     public Trade(String ID, Symbol symbol, int quantity) {
@@ -20,6 +25,8 @@ public class Trade {
         this.symbol = symbol;
         this.quantity = quantity;
     }
+
+    public abstract double calcDividend();
 
     public void setID(String ID) {
         this.ID = ID;
@@ -39,6 +46,11 @@ public class Trade {
 
     public int getQuantity() {
         return this.quantity;
+    }
+
+    public LocalDateTime getTradeTime() {
+        return tradeTime;
+
     }
 
     public void setQuantity(int quantity) {
@@ -64,8 +76,8 @@ public class Trade {
     }
 
     // public static void main(String[] args) throws Exception {
-    //     Trade t2  = new Trade("T2", Symbol.AAPL, 100, 15.5);
-    //     System.out.println(t2.toString());
-    //     t2.setPrice(-4);
+    // Trade t2 = new Trade("T2", Symbol.AAPL, 100, 15.5);
+    // System.out.println(t2.toString());
+    // t2.setPrice(-4);
     // }
 }
