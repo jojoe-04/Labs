@@ -104,8 +104,6 @@ public class Client {
     }
 
     public boolean canTrade(Trade newTrade) {
-        System.out.println(newTrade.getTradeTime());
-        System.out.println(this.getMembershipType().getStartTradeTime());
         if (newTrade.getTradeTime().isBefore(this.getMembershipType().getStartTradeTime()))
             return false;
         if (this.getMembershipType().getStatus() == "BRONZE" && numOfTrades >= BRONZE_LIMIT)
@@ -121,7 +119,6 @@ public class Client {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
         LocalDate date1 = LocalDate.now();
         LocalDateTime datetime = date1.atTime(9, 50, 9);
         FundTrade FD1 = new FundTrade("FD1", Symbol.AAPL, 4, 2.00, 1.00, datetime);

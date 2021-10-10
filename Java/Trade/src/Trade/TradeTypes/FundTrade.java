@@ -14,6 +14,10 @@ public class FundTrade extends Trade {
         setDividend(dividendPercent);
     }
 
+    public FundTrade(String ID, Symbol symbol, int quantity) {
+        super(ID, symbol, quantity);
+    }
+
     public double getDividend() {
         return this.dividend;
     }
