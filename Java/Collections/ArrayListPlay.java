@@ -25,14 +25,10 @@ public class ArrayListPlay {
 
         }
 
-        // sort order of elements
-        // Arrays.sort(arrayOfSix);
         Collections.sort(listSix);
         for (int each : listSix) {
             System.out.println(each);
         }
-
-        // insertion sort approach
 
     }
 
