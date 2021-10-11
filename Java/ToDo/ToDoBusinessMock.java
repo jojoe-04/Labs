@@ -18,7 +18,22 @@ public class ToDoBusinessMock {
 
         ToDoService doService = mock(ToDoService.class);
 
-        List<String> combinedlist = Arrays.asList(" Use Core Java ", " Use Spring Core ", " Use w3eHibernate ",
+        List<String> combinedlist = Arrays.asList(" Use Core Java ", " Use SpringCore ", " Use w3eHibernate ",
+                " Use Spring MVC ");
+        when(doService.getTodos("dummy")).thenReturn(combinedlist);
+
+        ToDoBusiness business = new ToDoBusiness(doService);
+
+        List<String> alltd = business.getTodosforHibernate("dummy");
+
+        System.out.println(alltd);
+        assertEquals(3, alltd.size());
+    }
+
+    public static void main(String[] args) {
+        ToDoService doService = mock(ToDoService.class);
+
+        List<String> combinedlist = Arrays.asList(" Use Core Java ", " Use SpringCore ", " Use w3eHibernate ",
                 " Use Spring MVC ");
         when(doService.getTodos("dummy")).thenReturn(combinedlist);
 
