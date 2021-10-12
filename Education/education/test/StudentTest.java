@@ -21,6 +21,8 @@ public class StudentTest {
         listSix.add(5.0);
 
         Student jojoe = new Student(listSix);
+        Student Emma = new Student(listSix);
+        Student Ainoo = new Student(listSix);
         System.out.println(jojoe.getAverageGrade());
         assertEquals(3.5, jojoe.getAverageGrade());
     }

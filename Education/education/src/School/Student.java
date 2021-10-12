@@ -2,6 +2,8 @@ package School;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.DoubleStream;
 
 public class Student implements Nameable, HasLevel {
 
@@ -53,12 +55,19 @@ public class Student implements Nameable, HasLevel {
     }
 
     public double getAverageGrade() {
-        double average = this.grades.stream().mapToDouble(a -> a).average().getAsDouble();
-        return average;
+        return this.grades.stream().mapToDouble(a -> a).average().getAsDouble();
     }
 
     public void displayGrades() {
         this.grades.stream().map(x -> x).forEach(y -> System.out.println(y));
+    }
+
+    public double getMaxGrade() {
+        return this.grades.stream().mapToDouble(v -> v).max().orElseThrow(NoSuchElementException::new);
+    }
+
+    public DoubleStream getGradesAsDoubleStream() {
+        return DoubleStream.of(this.grades.stream().mapToDouble(x -> x).toArray());
     }
 
     public static void main(String[] args) {
@@ -95,6 +104,7 @@ public class Student implements Nameable, HasLevel {
         System.out.println(Edem.getGrades());
 
         // Abstract Types
+        Nameable Student = new Student();
 
     }
 
