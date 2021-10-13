@@ -1,0 +1,12 @@
+{
+  "java.project.sourcePaths": ["src"],
+  "java.project.outputPath": "bin",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "c:\\Users\\User\\Downloads\\jar_files\\junit5-4.2.9.jar",
+    "c:\\Users\\User\\Downloads\\jar_files\\junit-jupiter-api-5.5.2.jar",
+    "c:\\Users\\User\\Downloads\\jar_files\\junit-platform-commons-1.5.2.jar",
+    "c:\\Users\\User\\Downloads\\jar_files\\mockito-all-1.9.1-20110911.jar",
+    "c:\\Users\\User\\Documents\\junit4-4.8.2.jar"
+  ]
+}
