@@ -1,0 +1,58 @@
+
+select current_date;
+
+select current_time; 
+
+select current_timestamp; 
+
+select to_date('2018-09-26', 'YY-MM-DD');
+
+select to_timestamp('2018 09 26', 'YYYY-MM-DD');
+--
+--select DATE_PART('2018-09-26'::date); 
+---- DATE_PART('2018-12-25'::date)
+select to_timestamp('2018 09 26', 'YYYY-MM-DD');
+
+select (CAST(MAX('2018-12-25') AS date) - CAST(MIN('2018-09-26') AS date));
+
+select extract(day from '2018-12-25'::timestamp - '2018-09-26'::timestamp) as dateDifference;
+
+select * from pubs2.titles;
+
+select extract(year from pubdate) from pubs2.titles t;
+
+-- Exercises 
+select extract(day from current_timestamp - '2011-01-01'::timestamp);
+
+
+--In a SELECT-statement, add the difference between 2011-01-01 and the current date to the sales date field in the sales table.
+select timestampadd(DAY,extract(day from current_timestamp - '2011-01-01'::timestamp),ord_date)
+from pubs2.sales s ;
+
+select 
+to_char(ord_date,'dd-mm-yy') as originalDate, 
+to_char((ord_date + interval '1 day' * extract(day from current_timestamp - '2011-01-01'::timestamp)),'dd-mm-yy') as newDate
+from pubs2.sales s;
+
+
+--Show how many days remain between now and Thanksgiving and/or Christmas and/or New Years Day.
+select
+extract(day from '2021-12-25'::timestamp - current_timestamp ) as "Days to Christmas Day",
+extract(day from '2021-12-31'::timestamp - current_timestamp ) as "Days to New Years Eve",
+extract(day from '2021-11-25'::timestamp - current_timestamp ) as "Days to Thanksgiving";
+
+
+--Show how old you are as a number of days - you don't have to be too honest about your year of birth if you are over 25 
+select
+date_part('year', age(timestamp '1997-04-21'))::int
+
+--For each of the publication dates in titles, display the difference between the pubdate and the current date in days as an integer.
+select
+pubdate::timestamp,
+current_timestamp, 
+extract(day from current_timestamp - pubdate::timestamp)::int as "PubFromCurrent"
+from pubs2.titles t 
+
+
+
+

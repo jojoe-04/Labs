@@ -1,0 +1,12 @@
+select current_date;
+
+select current_time; 
+
+select current_timestamp; 
+
+select to_date('2018-09-26', 'YY-MM-DD');
+
+select to_timestamp('2018 09 26', 'YYYY-MM-DD');
+
+select DATE_PART('2018-09-26'::date); 
+-- DATE_PART('2018-12-25'::date)

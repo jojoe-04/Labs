@@ -1,0 +1,60 @@
+
+select * from pubs2.titles
+
+/**
+ * DATA TYPES LAB
+ * */
+
+-- 1. Find all titles with an undefined price in table titles */
+select * 
+from pubs2.titles t 
+where price is null 
+
+
+-- 2. Find all titles with an undefined price in table titles and supply a price of $20.00 for those with no defined price 
+select coalesce(price,20::money) 
+from pubs2.titles t 
+
+select coalesce(price, cast(20 as money))
+from pubs2.titles t
+
+
+-- 3. List the first 50 characters (of the pr_info column) of the pub_info table
+select * from pubs2.pub_info pi2;
+
+select substring(pr_info,1,50)
+from pubs2.pub_info 
+
+select left(pr_info , 50)
+from pubs2.pub_info 
+
+
+-- 3. Examine the Postgres function reference for alternative ways of converting date values to varchar
+SELECT cast('2017-08-25' as varchar);
+
+SELECT to_char(current_date,'DD Mon YYYY' );
+
+
+--4. Format the ord_date in sales so it looks like this: Tuesday 13th September 1994
+
+SELECT to_char(ord_date,'Day DD Month YYYY' )
+from pubs2.sales;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++
+
