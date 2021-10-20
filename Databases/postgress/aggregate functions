@@ -1,0 +1,51 @@
+
+
+/**
+ * 
+ * GROUPING AND AGGREGATE FUNCTIONS
+ * 
+ * */
+
+--Get average prices from the titles table for each type of book, and convert type to char(30)
+select * from pubs2.titles t ;
+
+select type, avg(coalesce(price::numeric,0))::char(30) as "Average prices"
+from pubs2.titles t
+group by type
+
+--Print the difference between (to a resolution of days) the earliest and latest publication date in titles
+
+
+--extract(day from current_timestamp - pubdate::timestamp)
+
+select 
+min(pubdate) as "MinDate",
+max(pubdate) as "MaxDate",
+max(pubdate) - min(pubdate) as "Difference In Days"
+from pubs2.titles t
+
+--Print the average, min and max book prices within the titles table organised into groups based on type and publisher id.
+select type, pub_id, avg(price::numeric), min(price::numeric), max(price::numeric)
+from pubs2.titles t 
+group by type, pub_id; 
+
+--Refine the previous question to show only those types whose average price is > $20 and output the results sorted on the average price.
+select type,
+avg(price::numeric) as "GreaterThan20"
+from pubs2.titles t 
+group by type, pub_id
+having avg(price::numeric) > 20
+order by "GreaterThan20"
+
+--List the books in order of the length of their title
+select title,
+length(title) as "Lengths"
+from pubs2.titles t 
+order by "Lengths" desc
+
+
+
+--What is the average age in months of each type of title?
+
+
+
