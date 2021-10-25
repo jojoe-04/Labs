@@ -35,3 +35,12 @@ dictTest = {
     "family": "Ainoo",
     "location": "Accra",
 }
+
+
+def readFile():
+    f = open("Labs/Python/Data Science/file.txt", "r")
+    # print(f.read())
+    print(f.readline())
+
+
+readFile()
