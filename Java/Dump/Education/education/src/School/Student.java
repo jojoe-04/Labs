@@ -1,23 +1,35 @@
-package School;
+package Dump.Education.education.src.School;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.DoubleStream;
 
+/**
+ * STUDENT CLASS
+ */
 public class Student implements Nameable, HasLevel {
 
     protected List<Double> grades;
     protected String name;
     private Level level;
 
+    /**
+     * Default Constructor
+     */
     public Student() {
-        this.grades = new ArrayList<Double>();
+        this.grades = new ArrayList<>();
         this.name = "No name";
     }
 
+
+    /**
+     * 2nd Constructor
+     * @param name
+     * @param level
+     */
     public Student(String name, Level level) {
-        this.grades = new ArrayList<Double>();
+        this.grades = new ArrayList<>();
         this.name = name;
         this.level = level;
     }
@@ -59,7 +71,7 @@ public class Student implements Nameable, HasLevel {
     }
 
     public void displayGrades() {
-        this.grades.stream().map(x -> x).forEach(y -> System.out.println(y));
+        this.grades.stream().map(x -> x).forEach(System.out::println);
     }
 
     public double getMaxGrade() {
