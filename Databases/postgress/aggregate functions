@@ -46,6 +46,180 @@ order by "Lengths" desc
 
 
 --What is the average age in months of each type of title?
+select * from pubs2.titles;
+--select avg(extract(month from pubdate)::date) from pubs2.titles;
 
+select type, avg(extract(year from age(pubdate))*12  + extract(month from age(pubdate)))
+from titles
+group by type
+order by type;
+
+--How many authors live in each city?
+select city, count(city) 
+from pubs2.authors
+group by city
+order by count(city);
+
+--What is the longest title?
+select title, length(title) 
+from pubs2.titles
+order by length(title) desc limit 1 ;
+
+ --How many books have been sold by each store
+select stor_id, sum(qty) 
+from pubs2.sales
+group by stor_id;
+
+--how many books have been sold in total
+select sum(qty) 
+from pubs2.sales;
+
+
+--Joins
+select * from pubs2.publishers p ;
+select * from pubs2.pub_info;
+
+--Join the publishers and pub_info and show the publisher name and the first 40 characters of the pr_info information.
+select publishers.pub_name, left(pub_info.pr_info, 40) as "pub_info"
+from pubs2.publishers inner join pubs2.pub_info
+on publishers.pub_id = pub_info.pub_id ;
+
+--Join the publishers and titles tables to show all titles published by each publisher. Display the pub_id, pub_name and title_id
+select p.pub_id, p.pub_name, t.title_id 
+from pubs2.publishers p inner join pubs2.titles t 
+on p.pub_id = t.pub_id;
+
+--For each title_id in the table titles, rollup the corresponding qty in sales and 
+--show: title_id, title, ord_num and the rolled-up value as a column aggregate called Total Sold
+select t.title_id, t.title, s.ord_num, sum(s.qty) as "Total Sold"
+from pubs2.titles t inner join pubs2.sales s 
+on t.title_id = s.title_id
+group by t.title, t.title_id, s.ord_num 
+order by t.title_id ;
+
+
+--For each stor_id in stores, show the corresponding ord_num in sales and the discount type from table discounts. 
+--The output should consist of three columns: ord_num, discount and discounttype and should be sorted on ord_num
+select stores.stor_id, sales.ord_num, discounts.discount, discounts.discounttype 
+from pubs2.stores inner join pubs2.sales 
+on stores.stor_id = sales.stor_id 
+left outer join pubs2.discounts
+on stores.stor_id = discounts.stor_id
+order by sales.ord_num ;
+
+
+--Show au_lname from authors, and pub_name from publishers when both publisher and author live in the same city.
+select  a.au_lname, p.pub_name
+from pubs2.authors a inner join pubs2.publishers p
+on a.city = p.city;
+
+--for each author you show all publishers who live in the same city and have published one of the authors titles
+select a.au_lname, p.pub_name
+from pubs2.authors a inner join pubs2.publishers p
+on a.city = p.city 
+inner join pubs2.titleauthor t 
+on a.au_id = t.au_id ;
+
+--List each publisher's name, the title of each book they have sold and the total quantity of that title.
+select p.pub_name, t.title, sum(s.qty) as "total quantity"
+from pubs2.publishers p inner join pubs2.titles t
+on p.pub_id = t.pub_id 
+inner join pubs2.sales s 
+on t.title_id = s.title_id 
+group by p.pub_name, t.title
+order by p.pub_name, "total quantity" ;
+
+-- How many books have been published by each publisher?
+select p.pub_name, count(t.title_id) as "total quantity"
+from pubs2.publishers p inner join pubs2.titles t
+on p.pub_id = t.pub_id 
+group by p.pub_name
+order by p.pub_name, "total quantity" ;
+
+--How many different types of books has each publisher published?
+select p.pub_name, t.type, count(t."type")
+from pubs2.publishers p inner join pubs2.titles t
+on p.pub_id = t.pub_id 
+group by p.pub_name, t."type" 
+order by p.pub_name;
+
+
+--SUB QUERIES 
+--Which publishers have published at least one book?
+select p.pub_id, p.pub_name 
+from pubs2.publishers p
+where (p.pub_id in (
+	select t.pub_id
+	from pubs2.titles t));
+
+--Which authors have been published by more than one publisher?
+
+select au_id from (
+	select ta.au_id , t.pub_id 
+	from pubs2.titleauthor ta inner join pubs2.titles t 
+	on ta.title_id = t.title_id 
+	group by ta.au_id ,t.pub_id  
+	order by au_id
+) as "author_publisher"
+group by au_id
+having count(au_id) > 1
+
+--Which authors live in a city where a publisher exists?
+select a.au_fname, a.au_lname from authors a
+where a.city in (
+	select p.city from publishers p);
+
+--	How many authors are there with the same first initial?
+select sum(count) from (
+select (left(a.au_fname,1)), count(left(a.au_fname,1))
+from authors a
+group by (left(a.au_fname,1))) as firstt
+where count>1;
+
+--What is the most expensive book?
+select title from titles t
+where t.price = (
+	select max(price) from titles);''
+	
+	
+	--Which is the oldest published book?
+select title from titles
+	where pubdate = (select min(pubdate) from titles);
+
+
+--Which is the youngest?
+select title from titles
+	where pubdate = (select max(pubdate) from titles);
+
+
+--Which books are more expensive than all books of any other type?
+-- find most expensive book for each type, then compare to get max. (Question is not very clear)
+select title, price, type from titles t1
+where t1.price = (
+	select max(price) from titles t2
+	group by "type"
+	having t1."type"= t2.type);
+
+
+--Which books have an above average price for their type?
+-- for each type, find average, then compare price of title to the average
+select title, t1.type, price
+from titles t1
+where price::numeric > (
+	select avg(price::numeric)
+	from titles t2
+	where t2.type = t1.type);
+
+--How much above or below the "average price of all books" is the price for each book?
+
+
+
+
+-- VIEWS
+create view titlestoauthors as 
+select t.title_id, t.title, ta.au_id from titles t inner join titleauthor ta
+on t.title_id = ta.title_id;
+
+select * from titlestoauthors ;
 
 

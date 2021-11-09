@@ -1,6 +1,7 @@
 package School;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NaughtyStudent extends Student {
@@ -10,12 +11,24 @@ public class NaughtyStudent extends Student {
         // super.grades = naughtyGrades;
     }
 
+    /**
+     * Naughty student avergae grade is 10% higher 
+     * @return average
+     */
     @Override
-    public void addGrades(double[] grades) {
+    public double getAverageGrade() {
+        double avg = this.grades.stream().mapToDouble(a -> a).average().getAsDouble();
+        return (avg * 0.1) + avg;
+
+    }
+
+
+    public void addGradesII(double[] grades) {
         for (double each : grades) { // do some check to see if grade is valid
-            double increase = (double) (0.1 * each) + each;
+            double increase = (0.1 * each) + each;
             this.grades.add(increase);
         }
     }
+
 
 }

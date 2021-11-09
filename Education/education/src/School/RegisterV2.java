@@ -16,61 +16,69 @@ public class RegisterV2 {
     }
 
     public List<String> getRegister() {
-        return students.stream().map(x -> x.getName()).collect(Collectors.toList());
+        return students.stream().map(Student::getName).collect(Collectors.toList());
     }
 
     public Map<Level, List<Student>> getRegisterByLevel(Level level) {
-
-        return (Map<Level, List<Student>>) students.stream()
+        return students.stream()
                 .collect(Collectors.groupingBy(Student::getLevel, Collectors.mapping(e -> e, Collectors.toList())));
     }
 
     public List<Student> sort(Comparator<Student> comparator) {
-
-        return new ArrayList<Student>();
+        return new ArrayList<>();
 
     }
 
     public Student getStudentByName(String name) throws StudentNotFoundException {
-
         Student guy = (Student) students.stream().filter(x -> x.getName().equals(name));
         if (guy == null)
             throw new StudentNotFoundException();
         return guy;
     }
 
-    public double highestGrade() {
+    public double getHighestGrade() {
         Student student = students.stream().max(Comparator.comparing(Student::getMaxGrade)).get();
-        return student.getAverageGrade();
+        return student.getMaxGrade();
     }
 
-    public double averageOfAllGrades() {
+    public double getHighestGradeII() {
+        return this.students.stream().flatMap(x -> x.getGrades().stream()).max(Double::compare).get();
+         
+    }
 
+    /**
+     * @return
+     */
+    public double getAverageOfAllGrades() {
         List<Double> allGrades = this.students.stream().flatMap(x -> x.getGrades().stream())
                 .collect(Collectors.toList());
-
         return allGrades.stream().mapToDouble(a -> a).average().getAsDouble();
 
     }
 
-    public List<Double> gradesAbovePercent(double sixty) {
-
-        List<Double> allGrades = this.students.stream().flatMap(x -> x.getGrades().stream())
+    /** 
+     * @param value
+     * @return
+     */
+    public List<Double> gradesAbovePercent(double value) {
+       return this.students.stream().flatMap(x -> x.getGrades().stream()).filter(x -> x > value)
                 .collect(Collectors.toList());
-
-        return allGrades.stream().filter(a -> a > sixty).collect(Collectors.toList());
     }
 
+    /**
+     * @param name
+     * @return
+     */
     public Optional<Student> getStudentByNameOptional(String name) {
-        Optional<Student> student = Optional.of((Student) students.stream().filter(x -> x.getName().equals(name)));
-
-        // use optonal or else or get is present
-        // if(student.isPresent())
-        return student;
+        return Optional.of((Student) students.stream().filter(x -> x.getName().equals(name)));
     }
 
+    /**
+     * @param names
+     * @return
+     */
     public List<Student> getStudentsByNameOptional(List<String> names) {
-        List<Student> students = new ArrayList<Student>();
+        List<Student> students = new ArrayList<>();
         for (String name : names) {
             Optional<Student> retrievedStudent = getStudentByNameOptional(name);
             if (retrievedStudent.isPresent())
