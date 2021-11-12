@@ -1,4 +1,3 @@
 [debug] not up to date. inChanged = true, force = false
-[debug] Updating ProjectRef(uri("file:/C:/Users/User/Desktop/TLC%204/Labs/Scala/project/"), "scala-build")...
-[warn] Unrecognized repository Scala Plugin Bundled Repository, ignoring it
-[debug] Done updating ProjectRef(uri("file:/C:/Users/User/Desktop/TLC%204/Labs/Scala/project/"), "scala-build")
+[debug] Updating ProjectRef(uri("file:/Users/jojoeainoo/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Turntabl/TLC/Labs/Scala/project/"), "scala-build")...
+[debug] Done updating ProjectRef(uri("file:/Users/jojoeainoo/Library/Mobile%20Documents/com~apple~CloudDocs/Desktop/Turntabl/TLC/Labs/Scala/project/"), "scala-build")
