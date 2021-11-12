@@ -1,5 +1,7 @@
 import java.util.Date;
 import Array.concat;
+import scala.util.Random
+import scala.collection.SortedSet
 object Learn {
 
   def main(args: Array[String]): Unit = {
@@ -69,13 +71,12 @@ object Learn {
     println(result)
 
     // --------------------- MATCH EXPRESSIONS - switch statements ---------
-    val newAge = 18;
+    val newAge = 40;
     newAge match {
       case 18 => println("age is 18")
       case 20 => println("age is 20")
       case 21 => println("age is 21")
-
-      case _ => println("default")
+      case _  => println("default")
     }
 
     // return as expressions
@@ -316,6 +317,26 @@ object Learn {
     // scan left vs right
     println(numList.scanLeft(100)(_ - _));
     println(numList.scanRight(100)(_ - _));
+
+    //
+    // val r = scala.util.Random
+
+    // lottery random
+    println(Random.shuffle(1 to 49).take(6));
+
+    val setLottery =
+      scala.collection.mutable.SortedSet(Random.shuffle(1 to 49).take(6): _*);
+    println("SortedSet: " + setLottery);
+
+    //list al current files in current rectory except hidden files
+    val currentFiles = (new java.io.File(".")).listFiles.toList
+    println(currentFiles.map(_.toString).filter(!_.startsWith("./.")));
+
+    // val fileList = (new java.io.File(".")).listFiles.toList
+    // println(fileList.map(_.toString).filter(_.startsWith(".\\.")))
+
+    // director list & files list
+    println(currentFiles.filter(_.isDirectory));
 
   }
 
