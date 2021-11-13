@@ -1,7 +1,6 @@
-import java.util.Date;
-import Array.concat;
+import java.util.Date
 import scala.util.Random
-import scala.collection.SortedSet
+
 object Learn {
 
   def main(args: Array[String]): Unit = {
@@ -16,7 +15,10 @@ object Learn {
     println("b: " + b)
 
     // Expression evaluation
-    val x = { val first: Int = 1; val second: Int = 2; first + second }
+    val x = {
+      val first: Int = 1;
+      val second: Int = 2; first + second
+    }
     println(x);
 
     //  ---------------------  STRING INTERPOLATION--------------------------
@@ -39,9 +41,13 @@ object Learn {
     if (xr == 20) println(true)
 
     //if expressions
-    val xrp = { if (xr == 20) "x==20" else "x!=20" }
+    val xrp = {
+      if (xr == 20) "x==20" else "x!=20"
+    }
     println(xrp)
-    println({ if (xr == 20) "x==20" else "x!=20" })
+    println({
+      if (xr == 20) "x==20" else "x!=20"
+    })
 
     // WHILE LOOPS
     var loopIndex = 0;
@@ -67,7 +73,9 @@ object Learn {
     for (i <- list1; if i < 3) println(i)
 
     //For Loop expressions
-    val result = for { i <- list1; if i < 3 } yield { i * i }
+    val result = for {i <- list1; if i < 3} yield {
+      i * i
+    }
     println(result)
 
     // --------------------- MATCH EXPRESSIONS - switch statements ---------
@@ -76,12 +84,14 @@ object Learn {
       case 18 => println("age is 18")
       case 20 => println("age is 20")
       case 21 => println("age is 21")
-      case _  => println("default")
+      case _ => println("default")
     }
 
     // return as expressions
     val result1 = newAge match {
-      case 18 => newAge; case 20 => newAge; case _ => "default"
+      case 18 => newAge;
+      case 20 => newAge;
+      case _ => "default"
     }
     println(result1)
 
@@ -89,7 +99,8 @@ object Learn {
     val num = 4;
     val evenOdd = num match {
       case 2 | 4 | 6 | 8 | 10 => "even";
-      case 1 | 3 | 5 | 7 | 9  => "odd"; case _ => "default";
+      case 1 | 3 | 5 | 7 | 9 => "odd";
+      case _ => "default";
     }
     println(evenOdd)
 
@@ -255,7 +266,9 @@ object Learn {
     val myTuple2 = new Tuple2(1, 2);
     println(myTuple._3);
 
-    myTuple.productIterator.foreach { println }
+    myTuple.productIterator.foreach {
+      println
+    }
 
     //--------------------- OPTIONS TYPE -------------------------- (some or none)
     val list4 = List(1, 2, 3, 4);
@@ -338,6 +351,22 @@ object Learn {
     // director list & files list
     println(currentFiles.filter(_.isDirectory));
 
+    val (dir, files) = currentFiles.partition(_.isDirectory);
+
+
+    //---------------------Lazy Evaluation-------------------------- (some or none)
+    val strict = new Strict;
+    val lazyEval = new LazyEval;
+
+    println(strict.e);
+    println(lazyEval.e)
+
+    // CALL BY NAME PARAMETERS
+    val add = (x: Int, y: Int) => {x + y;}
+    method1(add(1,2));
+    method2(add(1,2));
+
+
   }
 
   // FUNCTIONS
@@ -354,21 +383,26 @@ object Learn {
   // shorter version 2
   def addTwoShort(x: Int, y: Int): Int = x + y;
 
-//   shorter 3
-  def addTwoShorter(x: Int, y: Int) = x + y;
+  //   shorter 3
+  def addTwoShorter(x: Int, y: Int): Int = x + y;
 
   // Object of functions
   object Math {
     // add
     def add(x: Int, y: Int) = x + y;
+
     //subtract
     def subtract(x: Int, y: Int) = x - y;
+
     //multiply
     def multiply(x: Int, y: Int) = x * y;
+
     //Only one argument function (square)
     def square(x: Int) = x * x;
+
     // default parameters
     def addDefault(x: Int = 0, y: Int = 0) = x + y;
+
     // no return value
     def printValues(x: Int, y: Int): Unit = println(x + y);
   }
@@ -394,4 +428,32 @@ object Learn {
 
   //odd function
   def isOdd(x: Int) = x % 2 != 0;
+
+
+  // strict class
+  class Strict{
+    val e: Int = {
+      println("strict");
+      9
+    }
+  }
+  // lazy eval class
+  class LazyEval{
+    lazy val e: Int = {
+      println("Lazy");
+      9
+    }
+  }
+
+  // call by value
+  def method1(n:Int): Unit = {
+    println("Method1");
+    println(n)
+  }
+
+  // call by name
+  def method2(n: => Int): Unit = {
+    println("Method2");
+    println(n);
+  }
 }
